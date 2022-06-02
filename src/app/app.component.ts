@@ -204,6 +204,15 @@ export class AppComponent {
     });
   }
 
+  openDialogWithCustomConfirmAndCancelButtons() {
+    this.dialog.confirm({
+      title: 'Custom Buttons',
+      body: 'They are really cool',
+      confirmButton: 'Hell Yeah They Are',
+      cancelButton: 'Nope they are ok'
+    });
+  }
+
   private clearConfig(config: DialogConfig) {
     return Object.keys(config).reduce((acc, key) => {
       acc[key] = config[key] === '' ? undefined : config[key];

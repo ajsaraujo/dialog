@@ -8,6 +8,11 @@ export interface DialogTitleAndBody {
   body: DialogContent;
 }
 
+export interface DialogTitleBodyAndButtons extends DialogTitleAndBody {
+  confirmButton: DialogContent;
+  cancelButton: DialogContent;
+}
+
 export interface DialogContentWithType {
   type: DialogContentTypes;
   content: DialogContent;

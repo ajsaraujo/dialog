@@ -21,6 +21,7 @@ import {
   DialogContentSymbol,
   DialogContentTypes as DialogContentType,
   DialogTitleAndBody,
+  DialogTitleBodyAndButtons,
   ExtractDialogRefData,
   ExtractDialogRefResult,
   ExtractDialogResolvedRef
@@ -72,7 +73,7 @@ export class DialogService {
   }
 
   confirm<D>(
-    content: DialogContent | DialogTitleAndBody,
+    content: DialogContent | DialogTitleAndBody | DialogTitleBodyAndButtons,
     config: Partial<DialogConfig<D>> = {}
   ): DialogRef<D, boolean, ComponentRef<any>> {
     const configWithDefaults = this.mergeConfigWithContent(this.applyDefaultSize<D>(config), content);
