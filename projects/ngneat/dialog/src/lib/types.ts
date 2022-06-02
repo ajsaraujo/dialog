@@ -17,6 +17,11 @@ export interface DialogTitleAndBodyWithType {
   body: DialogContentWithType;
 }
 
+export interface DialogTitleBodyAndButtonsWithType extends DialogTitleAndBodyWithType {
+  confirmButton: DialogContentWithType;
+  cancelButton: DialogContentWithType;
+}
+
 export const DialogContentSymbol = Symbol('Dialog Content Data');
 export interface DialogContentData {
   [DialogContentSymbol]: DialogTitleAndBodyWithType;
@@ -41,9 +46,8 @@ type _ExtractComponentDialogRef<T extends Type<unknown>> = T extends Type<unknow
   : never;
 
 type ExtractComponentDialogRef<T extends Type<unknown>> = _ExtractComponentDialogRef<T> extends [infer U]
-  ? U
-  : // Any is necessary to not break things: injecting DialogRef in the component constructor is optional.
-    any;
+  ? U // Any is necessary to not break things: injecting DialogRef in the component constructor is optional.
+  : any;
 
 export type ComputedDialogRefType<T extends Type<unknown> | TemplateRef<unknown>> = T extends TemplateRef<unknown>
   ? any
