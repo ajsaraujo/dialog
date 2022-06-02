@@ -78,6 +78,8 @@ export class DialogService {
   ): DialogRef<D, boolean, ComponentRef<any>> {
     const configWithDefaults = this.mergeConfigWithContent(this.applyDefaultSize<D>(config), content);
 
+    console.log(JSON.stringify(configWithDefaults.data[DialogContentSymbol]));
+
     return this.open(configWithDefaults.confirm.component, configWithDefaults);
   }
 
@@ -262,7 +264,10 @@ export class DialogService {
     };
   }
 
-  private mergeConfigWithContent(config: Partial<DialogConfig>, content: DialogContent | DialogTitleAndBody) {
+  private mergeConfigWithContent(
+    config: Partial<DialogConfig>,
+    content: DialogContent | DialogTitleAndBody | DialogTitleBodyAndButtons
+  ) {
     const { data, ...configWithDefaults } = this.mergeConfig(config);
 
     return {
@@ -270,21 +275,33 @@ export class DialogService {
       data: {
         ...data,
         [DialogContentSymbol]: this.isTemplateOrString(content)
-          ? {
-              title: null,
-              body: {
-                type: this.getTypeOfContent(content),
-                content
-              }
-            }
-          : Object.entries(content).reduce((acc, [key, value]) => {
-              acc[key] = {
-                type: this.getTypeOfContent(value),
-                content: value
-              };
+          ? this.createDialogWithBodyOnly(content)
+          : this.createDialogWithAllTheEntries(content)
+      }
+    };
+  }
 
-              return acc;
-            }, {})
+  private createDialogWithAllTheEntries(content: DialogTitleAndBody) {
+    const result = Object.entries(content).reduce((acc, [key, value]) => {
+      acc[key] = {
+        type: this.getTypeOfContent(value),
+        content: value
+      };
+
+      return acc;
+    }, {});
+
+    console.log(`Reduce result: ${JSON.stringify(result)}`);
+
+    return result;
+  }
+
+  private createDialogWithBodyOnly(content: DialogContent) {
+    return {
+      title: null,
+      body: {
+        type: this.getTypeOfContent(content),
+        content
       }
     };
   }

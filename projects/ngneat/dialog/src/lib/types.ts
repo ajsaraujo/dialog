@@ -31,6 +31,9 @@ export const DialogContentSymbol = Symbol('Dialog Content Data');
 export interface DialogContentData {
   [DialogContentSymbol]: DialogTitleAndBodyWithType;
 }
+export interface ConfirmDialogContentData {
+  [DialogContentSymbol]: DialogTitleBodyAndButtonsWithType;
+}
 
 export type JustProps<T extends object> = {
   [K in keyof T]: T[K] extends (...args: any[]) => any ? never : T[K];

@@ -27,7 +27,7 @@ import { DialogRef } from '../dialog-ref';
       </div>
 
       <div class="dialog-footer">
-        <ng-content select=".btn"></ng-content>
+        <ng-content select=".footer"></ng-content>
       </div>
     </div>
   `,

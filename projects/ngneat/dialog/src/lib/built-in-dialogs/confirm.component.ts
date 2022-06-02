@@ -1,4 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { DialogRef } from '../dialog-ref';
+import { ConfirmDialogContentData, DialogContentData, DialogContentSymbol } from '../types';
 
 import { BaseDialogComponent } from './base.component';
 
@@ -18,11 +20,36 @@ import { BaseDialogComponent } from './base.component';
         </g>
       </svg>
 
-      <button class="btn btn-cancel ngneat-dialog-secondary-btn" (click)="ref.close(false)">Cancel</button>
-      <button class="btn btn-success ngneat-dialog-primary-btn" (click)="ref.close(true)">OK</button>
+      <div class="footer">
+        <div [ngSwitch]="cancelButton.type">
+          <div *ngSwitchCase="'string'">
+            <button class="btn btn-cancel ngneat-dialog-secondary-btn" (click)="ref.close(false)">
+              {{ cancelButton.content }}
+            </button>
+
+            <button class="btn btn-success ngneat-dialog-primary-btn" (click)="ref.close(true)">
+              {{ confirmButton.content }}
+            </button>
+          </div>
+
+          <p *ngSwitchCase="'template'" [class.with-title]="title">
+            <ng-container *ngTemplateOutlet="cancelButton.content; context: context"></ng-container>
+            <ng-container *ngTemplateOutlet="confirmButton.content; context: context"></ng-container>
+          </p>
+        </div>
+      </div>
     </ngneat-dialog-base>
   `,
   styleUrls: ['./host.dialog.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ConfirmDialogComponent extends BaseDialogComponent {}
+export class ConfirmDialogComponent extends BaseDialogComponent {
+  confirmButton = this.confirmDialogRef.data[DialogContentSymbol].confirmButton;
+  cancelButton = this.confirmDialogRef.data[DialogContentSymbol].cancelButton;
+
+  constructor(public confirmDialogRef: DialogRef<ConfirmDialogContentData>) {
+    super(confirmDialogRef);
+
+    console.log(`Data I got: ${JSON.stringify(this.confirmDialogRef.data[DialogContentSymbol])}`);
+  }
+}
