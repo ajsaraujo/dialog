@@ -204,13 +204,17 @@ export class AppComponent {
     });
   }
 
-  openDialogWithCustomConfirmAndCancelButtons() {
+  openConfirmDialogWithCustomText() {
     this.dialog.confirm({
-      title: 'Custom Buttons',
-      body: 'They are really cool',
-      confirmButton: 'Hell Yeah They Are',
-      cancelButton: 'Nope they are ok'
+      title: 'Custom Text',
+      body: 'Pass any text you want',
+      confirmButton: 'Yes',
+      cancelButton: 'No'
     });
+  }
+
+  openConfirmDialogWithCustomButtons(confirmButton: TemplateRef<unknown>, cancelButton: TemplateRef<unknown>) {
+    this.dialog.confirm({ title: 'Custom Buttons', body: 'Pass any button youd like', confirmButton, cancelButton });
   }
 
   private clearConfig(config: DialogConfig) {

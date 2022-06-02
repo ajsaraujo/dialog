@@ -219,7 +219,11 @@
 </div>
 
 <div class="block">
-  <h2>Custom confirm and cancel buttons</h2>
+  <h2>Open a confirm dialog with custom buttons</h2>
 
-  <button (click)="openDialogWithCustomConfirmAndCancelButtons()">Open</button>
+  <button (click)="openConfirmDialogWithCustomText()">Custom text</button>
+  <button (click)="openConfirmDialogWithCustomButtons(confirmButton, cancelButton)">Custom buttons</button>
+
+  <ng-template #confirmButton>Confirmmmm</ng-template>
+  <ng-template #cancelButton>Cancellllll</ng-template>
 </div>
